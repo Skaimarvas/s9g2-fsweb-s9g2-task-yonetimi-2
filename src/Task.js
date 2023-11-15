@@ -3,17 +3,25 @@ import {
   differenceInDays,
   differenceInHours,
   differenceInMonths,
+  formatDistanceToNow,
 } from "date-fns";
+// const eoLocale = require('date-fns/locale/eo')
+import { tr as trLocale } from "date-fns/locale";
 
 const Task = ({ taskObj, onComplete }) => {
   const deadLine = new Date(taskObj.deadline);
   const startDate = new Date();
 
-  console.log(startDate);
+  const result = formatDistanceToNow(deadLine, {
+    locale: trLocale,
+    addSuffix: true,
+  });
 
-  const monthsDifference = differenceInMonths(deadLine, startDate);
+  console.log("result", result);
 
-  const daysDifference = differenceInDays(deadLine, startDate);
+  // const monthsDifference = differenceInMonths(deadLine, startDate);
+
+  // const daysDifference = differenceInDays(deadLine, startDate);
 
   const hoursDifference = differenceInHours(deadLine, startDate);
 
@@ -25,7 +33,7 @@ const Task = ({ taskObj, onComplete }) => {
         <span
           className={hoursDifference < 72 ? "bg-[#ffd9d4]" : "bg-[#83A2FF]"}
         >
-          {" "}
+          {/* {" "}
           {Math.abs(hoursDifference) < 24
             ? hoursDifference > 0
               ? `yaklaşık ${hoursDifference} saat sonra `
@@ -36,10 +44,11 @@ const Task = ({ taskObj, onComplete }) => {
               : `${Math.abs(daysDifference)} gün önce `
             : monthsDifference > 0
             ? `${monthsDifference} ay sonra`
-            : `${Math.abs(monthsDifference)} ay önce`}
+            : `${Math.abs(monthsDifference)} ay önce`} */}
+          {result}
         </span>
       </div>
-      <p> {taskObj.deadline} </p>
+
       <p>{taskObj.description}</p>
       <div>
         {taskObj.people.map((p) => (
